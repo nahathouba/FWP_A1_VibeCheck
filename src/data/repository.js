@@ -4,7 +4,7 @@ const USER_KEY = "user";
 // Initialise local storage "users" with data, if the data is already set this function returns immediately
 function initUsers() {
   // Stop if data is already initialised
-  if(localStorage.getItem(USERS_KEY) !== null)
+  if (localStorage.getItem(USERS_KEY) !== null)
     return;
 
   // User data is hard-coded
@@ -33,9 +33,8 @@ function getUsers() {
 
 function verifyUser(username, password) {
   const users = getUsers();
-  for(const user of users) {
-    if(username === user.username && password === user.password)
-    {
+  for (const user of users) {
+    if (username === user.username && password === user.password) {
       setUser(username);
       return true;
     }
@@ -60,7 +59,21 @@ function setNewUser(newUser) {
   let oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
   oldUsers.push(newUser);
 
-  localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));  
+  localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));
+}
+
+function validateUserCreds(email, password) {
+  const MAIL_FORMAT = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  let valid = { validEmail: false, validPassword: false };
+
+  if (email.match(MAIL_FORMAT))
+    valid.validEmail = true;
+
+  if (password !== "")
+    valid.validPassword = true;
+
+  return valid;
 }
 
 export {
@@ -68,5 +81,6 @@ export {
   verifyUser,
   getUser,
   removeUser,
-  setNewUser
+  setNewUser,
+  validateUserCreds
 }
