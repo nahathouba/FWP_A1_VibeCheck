@@ -28,7 +28,7 @@ function Signup(props) {
       const newUser = { username: fields.username, password: fields.password };
       setNewUser(newUser);
 
-      props.history.push("/login");
+      props.history.push("/signin");
       return;
     }
 
@@ -42,7 +42,7 @@ function Signup(props) {
 
   return (
     <div>
-      <h1>Signup</h1>
+      <h1>Sign Up</h1>
       <hr />
       <div className="row">
         <div className="col-md-6">
@@ -58,7 +58,7 @@ function Signup(props) {
                 value={fields.password} onChange={handleInputChange} />
             </div>
             <div className="form-group">
-              <input type="submit" className="btn btn-primary" value="Login" />
+              <input type="submit" className="btn btn-primary" value="SUBMIT" />
             </div>
             {errorMessage !== null &&
               <div className="form-group">

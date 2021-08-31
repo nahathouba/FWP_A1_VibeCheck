@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { verifyUser } from "../data/repository";
 
-function Login(props) {
+function Signin(props) {
   const [fields, setFields] = useState({ username: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -23,9 +23,9 @@ function Login(props) {
 
     const verified = verifyUser(fields.username, fields.password);
 
-    // If verified login the user.
-    if(verified === true) {
-      props.loginUser(fields.username);
+    // If verified signin the user.
+    if (verified === true) {
+      props.signinUser(fields.username);
 
       // Navigate the user to the home page.
       props.history.push("/");
@@ -43,7 +43,7 @@ function Login(props) {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Sign In</h1>
       <hr />
       <div className="row">
         <div className="col-md-6">
@@ -59,7 +59,7 @@ function Login(props) {
                 value={fields.password} onChange={handleInputChange} />
             </div>
             <div className="form-group">
-              <input type="submit" className="btn btn-primary" value="Login" />
+              <input type="submit" className="btn btn-primary" value="SUBMIT" />
             </div>
             {errorMessage !== null &&
               <div className="form-group">
@@ -73,4 +73,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Signin;
