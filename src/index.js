@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { initUsers } from './data/repository';
+
+// Initializing local storage users data
+initUsers();
 
 ReactDOM.render(
   <React.StrictMode>
