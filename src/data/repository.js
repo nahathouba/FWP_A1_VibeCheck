@@ -56,9 +56,17 @@ function removeUser() {
   localStorage.removeItem(USER_KEY);
 }
 
+function setNewUser(newUser) {
+  let oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
+  oldUsers.push(newUser);
+
+  localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));  
+}
+
 export {
   initUsers,
   verifyUser,
   getUser,
-  removeUser
+  removeUser,
+  setNewUser
 }

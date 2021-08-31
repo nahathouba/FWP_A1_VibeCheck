@@ -7,6 +7,7 @@ import Login from "./Login";
 import MyProfile from "./MyProfile";
 import Forum from "./Forum";
 import { getUser, removeUser } from "../data/repository";
+import Signup from "./Signup";
 
 
 function App() {
@@ -26,10 +27,13 @@ function App() {
     <Router>
       <Navbar username={username} logoutUser={logoutUser} />
       <main role="main">
-        <div className="container my-3">
+        <div className="container my-4">
           <Switch>
             <Route path="/login" render={props => (
               <Login {...props} loginUser={loginUser} />
+            )} />
+            <Route path="/signup" render={props => (
+              <Signup {...props} />
             )} />
             <Route path="/profile">
               <MyProfile username={username} />
