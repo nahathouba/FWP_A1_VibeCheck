@@ -44,7 +44,15 @@ function verifyUser(email, password) {
 }
 
 function setUser(username) {
-  localStorage.setItem(USER_KEY, username);
+  const usersData = getUsers();
+
+  for (const user of usersData) {
+    if (user.email === username) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+  }
+
+  //localStorage.setItem(USER_KEY, username);
 }
 
 function getUser() {
@@ -81,11 +89,18 @@ function validateUserCreds(email, password) {
   return valid;
 }
 
+function getUserName() {
+  const currentUser = getUser();
+
+  return JSON.parse(currentUser.name);
+}
+
 export {
   initUsers,
   verifyUser,
   getUser,
   removeUser,
   setNewUser,
-  validateUserCreds
+  validateUserCreds,
+  getUserName
 }
