@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { setNewUser, validateUserCreds } from "../data/repository";
 
 function Signup(props) {
-  const [fields, setFields] = useState({ username: "", password: "" });
+  const [fields, setFields] = useState({ name: "", email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleInputChange = (event) => {
@@ -10,7 +10,7 @@ function Signup(props) {
     const value = event.target.value;
 
     // Copy fields
-    const temp = { username: fields.username, password: fields.password };
+    const temp = { name: fields.name, email: fields.email, password: fields.password };
 
     // Update field and state
     temp[name] = value;
@@ -21,11 +21,11 @@ function Signup(props) {
     event.preventDefault();
 
     // Validates the user credentials
-    const validUser = validateUserCreds(fields.username, fields.password);
+    const validUser = validateUserCreds(fields.email, fields.password);
 
     // If user credentials are valid create the new user
     if (validUser.validEmail === true && validUser.validPassword === true) {
-      const newUser = { username: fields.username, password: fields.password };
+      const newUser = [{ name: fields.name, email: fields.email, password: fields.password }];
       setNewUser(newUser);
 
       props.history.push("/signin");
@@ -48,9 +48,14 @@ function Signup(props) {
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username" className="control-label">Username</label>
-              <input name="username" id="username" className="form-control"
-                value={fields.username} onChange={handleInputChange} />
+              <label htmlFor="name" className="control-label">Name</label>
+              <input name="name" id="name" className="form-control"
+                value={fields.name} onChange={handleInputChange} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email" className="control-label">Email</label>
+              <input name="email" id="email" className="form-control"
+                value={fields.email} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label htmlFor="password" className="control-label">Password</label>

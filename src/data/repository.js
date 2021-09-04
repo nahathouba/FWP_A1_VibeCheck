@@ -31,11 +31,11 @@ function getUsers() {
   return JSON.parse(data);
 }
 
-function verifyUser(username, password) {
+function verifyUser(email, password) {
   const users = getUsers();
   for (const user of users) {
-    if (username === user.username && password === user.password) {
-      setUser(username);
+    if (email === user.email && password === user.password) {
+      setUser(email);
       return true;
     }
   }
@@ -56,6 +56,11 @@ function removeUser() {
 }
 
 function setNewUser(newUser) {
+  if (localStorage.getItem(USERS_KEY) === null) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(newUser));
+    return;
+  }
+
   let oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
   oldUsers.push(newUser);
 

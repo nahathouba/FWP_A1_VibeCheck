@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { initUsers } from './data/repository';
 
 // Initializing local storage users data
-initUsers();
+//initUsers();
 
 ReactDOM.render(
   <React.StrictMode>

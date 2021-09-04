@@ -34,9 +34,6 @@ function Navbar(props) {
               :
               <>
                 <li className="nav-item">
-                  <span className="nav-link text-light">Welcome, {props.username}</span>
-                </li>
-                <li className="nav-item">
                   <Link className="nav-link" to="/signin" onClick={props.logoutUser}>SIGN OUT</Link>
                 </li>
               </>

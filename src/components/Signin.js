@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { verifyUser } from "../data/repository";
 
 function Signin(props) {
-  const [fields, setFields] = useState({ username: "", password: "" });
+  const [fields, setFields] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
   // Generic change handler.
@@ -11,7 +11,7 @@ function Signin(props) {
     const value = event.target.value;
 
     // Copy fields.
-    const temp = { username: fields.username, password: fields.password };
+    const temp = { email: fields.email, password: fields.password };
 
     // Update field and state.
     temp[name] = value;
@@ -21,11 +21,11 @@ function Signin(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const verified = verifyUser(fields.username, fields.password);
+    const verified = verifyUser(fields.email, fields.password);
 
     // If verified signin the user.
     if (verified === true) {
-      props.signinUser(fields.username);
+      props.signinUser(fields.email);
 
       // Navigate the user to the home page.
       props.history.push("/");
@@ -49,9 +49,9 @@ function Signin(props) {
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username" className="control-label">Username</label>
-              <input name="username" id="username" className="form-control"
-                value={fields.username} onChange={handleInputChange} />
+              <label htmlFor="email" className="control-label">Email</label>
+              <input name="email" id="email" className="form-control"
+                value={fields.email} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label htmlFor="password" className="control-label">Password</label>
