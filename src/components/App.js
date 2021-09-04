@@ -36,7 +36,7 @@ function App() {
                 <Signup {...props} />
               )} />
               <Route path="/profile">
-                <MyProfile username={username} />
+                <MyProfile />
               </Route>
               <Route path="/forum">
                 <Forum username={username} />
