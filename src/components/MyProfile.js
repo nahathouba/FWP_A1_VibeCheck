@@ -1,4 +1,4 @@
-import { Alert, Modal } from "react-bootstrap";
+import { Alert, Modal, Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
@@ -10,18 +10,29 @@ function MyProfile() {
 
   const { user, deleteUser } = useContext(UserContext);
 
+  // State for alert which is use to indicate when successfully changed profile details
   const [showAlert, setShowAlert] = useState(false);
 
-  const [show, setShow] = useState(false);
+  // State for edit profile details modal
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  // State for delete user account modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleShowEdit = () => setShowEditModal(true);
+  const handleCloseEdit = () => setShowEditModal(false);
+
+  const handleCloseDelete = () => setShowDeleteModal(false);
 
   const handleShowAlert = () => {
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
     }, 2000)
+  }
+
+  const handleDelete = () => {
+    setShowDeleteModal(true);
   }
 
   const deleteAccount = () => {
@@ -56,8 +67,8 @@ function MyProfile() {
             <div class="col-sm-6 p-2">
               <h4>{user.name} <br /> {user.email}</h4>
               <div>
-                <button onClick={handleShow} className="btn text-warning m-2" data-toggle="modal"><i className="material-icons">&#xE254;</i></button>
-                <button onClick={deleteAccount} className="btn text-danger m-2" data-toggle="modal"><i className="material-icons">&#xE872;</i></button>
+                <button onClick={handleShowEdit} className="btn text-warning m-2" data-toggle="modal"><i className="material-icons">&#xE254;</i></button>
+                <button onClick={handleDelete} className="btn text-danger m-2" data-toggle="modal"><i className="material-icons">&#xE872;</i></button>
               </div>
             </div>
           </div>
@@ -67,16 +78,37 @@ function MyProfile() {
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      {/* Modal to edit user profile details */}
+      <Modal show={showEditModal} onHide={handleCloseEdit}>
         <Modal.Header closeButton>
           <Modal.Title>Edit User</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <EditUserForm handleClose={handleClose} />
+          <EditUserForm handleClose={handleCloseEdit} />
         </Modal.Body>
 
         <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal to confirm deleting user account */}
+      <Modal show={showDeleteModal} onHide={handleCloseDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Account</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          Confirm to delete your account.
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            CANCEL
+          </Button>
+          <Button variant="danger" onClick={deleteAccount}>
+            CONFIRM
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
