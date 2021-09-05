@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext"
 
 function Navbar(props) {
+  const { user, signoutUser } = useContext(UserContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -15,7 +19,7 @@ function Navbar(props) {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
-            {props.username !== null &&
+            {user !== null &&
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/profile">My Profile</Link>
@@ -27,18 +31,18 @@ function Navbar(props) {
             }
           </ul>
           <ul className="navbar-nav">
-            {props.username === null ?
+            {user === null ?
               <li className="nav-item">
                 <Link className="nav-link" to="/signin">SIGN IN</Link>
               </li>
               :
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signin" onClick={props.signoutUser}>SIGN OUT</Link>
+                  <Link className="nav-link" to="/signin" onClick={signoutUser}>SIGN OUT</Link>
                 </li>
               </>
             }
-            {props.username === null ?
+            {user === null ?
               <li className="nav-item">
                 <Link className="nav-link" to="/signup">SIGN UP</Link>
               </li>

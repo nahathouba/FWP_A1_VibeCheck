@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { setNewUser, validateUserCreds } from "../data/repository";
 
-function Signup(props) {
+function Signup() {
+  const history = useHistory();
+
   const [fields, setFields] = useState({ name: "", email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -25,10 +28,9 @@ function Signup(props) {
 
     // If user credentials are valid create the new user
     if (validUser.validEmail === true && validUser.validPassword === true) {
-      const newUser = [{ name: fields.name, email: fields.email, password: fields.password }];
-      setNewUser(newUser);
+      setNewUser(fields.name, fields.email, fields.password);
 
-      props.history.push("/signin");
+      history.push("/signin");
       return;
     }
 

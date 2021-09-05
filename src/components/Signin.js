@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { useContext } from "react";
+import { useHistory } from "react-router";
+import { UserContext } from "../contexts/UserContext";
 import { verifyUser } from "../data/repository";
 
-function Signin(props) {
+function Signin() {
+  const { signinUser } = useContext(UserContext);
+
+  const history = useHistory();
+
   const [fields, setFields] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -25,10 +32,9 @@ function Signin(props) {
 
     // If verified signin the user.
     if (verified === true) {
-      props.signinUser(fields.email);
-
+      signinUser(fields.email);
       // Navigate the user to the home page.
-      props.history.push("/");
+      history.push("/");
       return;
     }
 

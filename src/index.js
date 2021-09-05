@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { initUsers } from './data/repository';
+import UserContextProvider from "../src/contexts/UserContext";
 
-// Initializing local storage users data
-//initUsers();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

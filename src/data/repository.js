@@ -63,13 +63,17 @@ function removeUser() {
   localStorage.removeItem(USER_KEY);
 }
 
-function setNewUser(newUser) {
+function setNewUser(name, email, password) {
   if (localStorage.getItem(USERS_KEY) === null) {
+    const newUser = [{ name: name, email: email, password: password }]
+
     localStorage.setItem(USERS_KEY, JSON.stringify(newUser));
     return;
   }
 
-  let oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
+  const newUser = { name: name, email: email, password: password };
+
+  var oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
   oldUsers.push(newUser);
 
   localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));
