@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const USERS_KEY = "users";
 const USER_KEY = "user";
 
@@ -64,19 +66,53 @@ function removeUser() {
 }
 
 function setNewUser(name, email, password) {
-  if (localStorage.getItem(USERS_KEY) === null) {
-    const newUser = [{ name: name, email: email, password: password }]
+  var userExist = isUserAlreadyExist(name, password);
+  if (userExist === false) {
+    if (localStorage.getItem(USERS_KEY) === null || localStorage.getItem(USERS_KEY) === "null") {
+      const newUser = [{ id: uuidv4(), name: name, email: email, password: password }]
 
-    localStorage.setItem(USERS_KEY, JSON.stringify(newUser));
-    return;
+      localStorage.setItem(USERS_KEY, JSON.stringify(newUser));
+      return;
+    }
+
+    const newUser = { id: uuidv4(), name: name, email: email, password: password };
+
+    var oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
+    oldUsers.push(newUser);
+
+    localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));
+  }
+}
+
+function isUserAlreadyExist(name, email) {
+  const users = getUsers();
+  if (users === null)
+    return false;
+
+  for (const user of users) {
+    if (user.name === name && user.email && email)
+      return true;
+  }
+  return false;
+}
+
+function deleteUserAccount(id) {
+  const users = getUsers();
+  if (users === null)
+    return
+
+  var index;
+  for (const user of users) {
+    if (user.id === id) {
+      index = users.indexOf(user);
+    }
   }
 
-  const newUser = { name: name, email: email, password: password };
+  if (index >= 0) {
+    users.splice(index, 1);
+  }
 
-  var oldUsers = JSON.parse(localStorage.getItem(USERS_KEY));
-  oldUsers.push(newUser);
-
-  localStorage.setItem(USERS_KEY, JSON.stringify(oldUsers));
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
 function validateUserCreds(email, password) {
@@ -108,5 +144,6 @@ export {
   validateUserCreds,
   getUserName,
   setUser,
-  getUsers
+  getUsers,
+  deleteUserAccount
 }

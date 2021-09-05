@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getUser, removeUser, getUsers } from "../data/repository";
+import { getUser, removeUser, getUsers, setNewUser, deleteUserAccount } from "../data/repository";
 
 export const UserContext = createContext();
 
@@ -12,15 +12,6 @@ const UserContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(user));
-    })
-
-    useEffect(() => {
-        var oldUser = getUsers();
-        if (oldUser === null)
-            return
-        oldUser.push(user);
-        localStorage.setItem("users", JSON.stringify(oldUser));
-
     })
 
     const signinUser = (username) => {
@@ -36,6 +27,7 @@ const UserContextProvider = (props) => {
     const deleteUser = () => {
         setUserState(null);
         removeUser();
+        deleteUserAccount(user.id);
     }
 
     const updateUser = (updatedUserdetails) => {

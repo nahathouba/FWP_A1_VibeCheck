@@ -1,12 +1,9 @@
 import { Form, Button } from "react-bootstrap"
 import { UserContext } from '../contexts/UserContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { getUsers, setNewUser, deleteUserAccount } from "../data/repository";
 
 const EditUserForm = (props) => {
-    // const [name, setName] = useState(theEmployee.name);
-    // const [email, setEmail] = useState(theEmployee.email);
-    // const [password, setpassword] = useState(theEmployee.address);
-
     const { user, updateUser } = useContext(UserContext);
 
     const [fields, setFields] = useState(user);
@@ -29,6 +26,15 @@ const EditUserForm = (props) => {
         e.preventDefault();
         updateUser(updatedUserDetails)
     }
+
+    useEffect(() => {
+        var oldUser = getUsers();
+        if (oldUser === null)
+            return
+
+        setNewUser(fields.name, fields.email, fields.password);
+        deleteUserAccount(user.id);
+    }, [user])
 
     return (
 
