@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import { UserContext } from "../contexts/UserContext";
-import { verifyUser } from "../data/repository";
+import { verifyUser, getUser } from "../data/repository";
 
 function Signin() {
   const { signinUser } = useContext(UserContext);
@@ -32,7 +32,7 @@ function Signin() {
 
     // If verified signin the user.
     if (verified === true) {
-      signinUser(fields.email);
+      signinUser(JSON.parse(getUser()));
       // Navigate the user to the home page.
       history.push("/");
       return;

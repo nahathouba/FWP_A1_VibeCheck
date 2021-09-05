@@ -106,5 +106,7 @@ export {
   removeUser,
   setNewUser,
   validateUserCreds,
-  getUserName
+  getUserName,
+  setUser,
+  getUsers
 }

@@ -1,29 +1,45 @@
-import { createContext, useState } from "react";
-import { getUser } from "../data/repository";
-import { removeUser } from "../data/repository";
+import { createContext, useEffect, useState } from "react";
+import { getUser, removeUser, getUsers } from "../data/repository";
 
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
-    const [user, setUser] = useState(JSON.parse(getUser()));
+    const [user, setUserState] = useState(JSON.parse(getUser()));
+
+    useEffect(() => {
+        setUserState(JSON.parse(getUser()))
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(user));
+    })
+
+    useEffect(() => {
+        var oldUser = getUsers();
+        if (oldUser === null)
+            return
+        oldUser.push(user);
+        localStorage.setItem("users", JSON.stringify(oldUser));
+
+    })
 
     const signinUser = (username) => {
-        setUser(username);
+        setUserState(username);
     }
 
     const signoutUser = () => {
         removeUser();
-        setUser(null);
+        setUserState(null);
     }
 
 
     const deleteUser = () => {
-        setUser(null);
+        setUserState(null);
         removeUser();
     }
 
     const updateUser = (updatedUserdetails) => {
-        setUser(updatedUserdetails);
+        setUserState(updatedUserdetails);
     }
 
     return (
